@@ -4,9 +4,9 @@ var bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json({ type: 'application/json'});
 
-//var rpio = require('rpio');
+var rpio = require('rpio');
 
-//rpio.open(3, rpio.OUTPUT, rpio.HIGH);
+rpio.open(3, rpio.OUTPUT, rpio.HIGH);
 var user = {"username":"admin","password":"admin"};
 app.post('/control', jsonParser, function (req, res) {
   if (!req.body) return res.sendStatus(400);
@@ -27,10 +27,10 @@ app.listen(3000, function () {
 
 var toggleRelay = function(res, relay, state){ 
   if(state == 1){ 
-    //rpio.write(req.body.relay, rpio.HIGH);
+    rpio.write(req.body.relay, rpio.HIGH);
     return res.sendStatus(200);
   } else if(state==0){ 
-    //rpio.write(req.body.relay, rpio.LOW);
+    rpio.write(req.body.relay, rpio.LOW);
     return res.sendStatus(200);
   } else return res.sendStatus(400);
 }
