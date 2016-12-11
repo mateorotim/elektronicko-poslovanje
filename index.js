@@ -1,22 +1,36 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 
-var rpio = require('rpio');
+var jsonParser = bodyParser.json({ type: 'application/json'});
 
-rpio.open(3, rpio.OUTPUT, rpio.HIGH);
+//var rpio = require('rpio');
+
+//rpio.open(3, rpio.OUTPUT, rpio.HIGH);
+var user = {"username":"admin","password":"admin"};
+app.post('/control', jsonParser, function (req, res) {
+  if (!req.body) return res.sendStatus(400);
+  var username = req.headers.username;
+  var password = req.headers.password;
+  if(username == user.username && password == user.password){
+    toggleRelay(res, req.body.relay, req.body.state);
+  } else res.sendStatus(400);
+})
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
 })
 
-app.get('/1', function (req, res) {
-  rpio.write(3, rpio.LOW);
-})
-
-app.get('/0', function (req, res) {
-  rpio.write(3, rpio.HIGH);
-})
-
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
+
+var toggleRelay = function(res, relay, state){ 
+  if(state == 1){ 
+    //rpio.write(req.body.relay, rpio.HIGH);
+    return res.sendStatus(200);
+  } else if(state==0){ 
+    //rpio.write(req.body.relay, rpio.LOW);
+    return res.sendStatus(200);
+  } else return res.sendStatus(400);
+}
