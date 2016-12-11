@@ -27,10 +27,10 @@ app.listen(3000, function () {
 
 var toggleRelay = function(res, relay, state){ 
   if(state == 1){ 
-    rpio.write(req.body.relay, rpio.HIGH);
+    rpio.write(relay, rpio.HIGH);
     return res.sendStatus(200);
   } else if(state==0){ 
-    rpio.write(req.body.relay, rpio.LOW);
+    rpio.write(relay, rpio.LOW);
     return res.sendStatus(200);
   } else return res.sendStatus(400);
 }
