@@ -28,7 +28,7 @@ router.post('/login', function (req, res) {
 
 router.get('/read', function (req, res) {
     if (authenticate(req.headers.username, req.headers.password) == true) {
-        res.send(rpio.read(req.headers.pin) ? 'high' : 'low');
+        res.send(rpio.read(3) ? 'high' : 'low');
     } else res.sendStatus(400);
 });
 
