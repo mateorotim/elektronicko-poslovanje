@@ -11,11 +11,19 @@ router.get('/test', function (req, res, next) {
 });
 
 router.post('/control', function (req, res) {
-    if (!req.headers) return res.sendStatus(400);
+    //if (!req.headers) return res.sendStatus(400);
     if (!req.body) return res.sendStatus(400);
     if (authenticate(req.headers.username, req.headers.password) == true) {
         toggleRelay(res, req.body.relay, req.body.state);
     } else res.sendStatus(400);
+});
+
+router.post('/login', function (req, res) {
+    var result = {"success":false};
+    if (authenticate(req.headers.username, req.headers.password) == true) {
+        var result = {"success":true};
+    }
+    res.send(result);
 });
 
 var authenticate = function (username, password) {
