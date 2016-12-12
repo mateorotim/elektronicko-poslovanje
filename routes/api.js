@@ -26,6 +26,12 @@ router.post('/login', function (req, res) {
     res.send(result);
 });
 
+router.get('/read', function (req, res) {
+    if (authenticate(req.headers.username, req.headers.password) == true) {
+        res.send(rpio.read(req.headers.pin) ? 'high' : 'low');
+    } else res.sendStatus(400);
+});
+
 var authenticate = function (username, password) {
     if (username == user.username && password == user.password) {
         return true;
