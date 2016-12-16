@@ -1,7 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var JsonDB = require('node-json-db');
 
 var rpio = require('rpio');
+
+var db = new JsonDB("db", true, true);
+
 rpio.open(3, rpio.OUTPUT, rpio.HIGH);
 
 var user = { "username": "admin", "password": "admin" };
@@ -15,6 +19,22 @@ router.post('/control', function (req, res) {
     if (!req.body) return res.sendStatus(400);
     if (authenticate(req.headers.username, req.headers.password) == true) {
         toggleRelay(res, req.body.relay, req.body.state);
+    } else res.sendStatus(400);
+});
+
+router.post('/add', function (req, res) {
+    if (!req.body) return res.sendStatus(400);
+    if (authenticate(req.headers.username, req.headers.password) == true) {
+        if(req.body.name && req.body.pin) {
+            var relay = {
+                "name":req.body.name,
+                "pin":req.body.pin,
+                "state":1
+            }
+            db.push("/relays",relay);
+            res.sendStatus(200);
+        } else res.sendStatus(400);
+        
     } else res.sendStatus(400);
 });
 
