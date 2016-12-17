@@ -80,7 +80,7 @@ router.get('/read', function (req, res) {
     if (auth(req.headers.username, req.headers.password)) {
         var data = db.getData("/");
         if(data.relays && data.relays.length > 0){
-            res.send(data.relay);
+            res.send(data.relays);
         }
     } else res.sendStatus(400);
 });
