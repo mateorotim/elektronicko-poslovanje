@@ -91,7 +91,7 @@ exports.findRelay = function (name) {
     return null;
 }
 
-exports.rpioOpen = function (pin, state) {
+var rpioOpen = function (pin, state) {
     if (state === 1) {
         rpio.open(pin, rpio.OUTPUT, rpio.LOW);
         console.log("pin %s set to OUTPUT and HIGH", pin);
