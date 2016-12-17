@@ -95,7 +95,7 @@ var auth = function (username, password) {
     return false;
 }
 
-var rpioWrite = function(pin, state){
+var rpioWrite = function(req, res, pin, state){
     if(state === 1){
         rpio.write(pin, rpio.LOW);
         console.log("pin %s set to HIGH", pin);
