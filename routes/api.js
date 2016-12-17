@@ -4,7 +4,7 @@ var JsonDB = require('node-json-db');
 
 var rpio = require('rpio');
 
-var db = new JsonDB("../database/db", true, true);
+var db = new JsonDB(__dirname + '/db', true, true);
 
 rpio.open(3, rpio.OUTPUT, rpio.HIGH);
 
