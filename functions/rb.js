@@ -6,12 +6,14 @@ var db = new JsonDB('../database/db', true, true);
 
 exports.auth = function (req) {
     var data = db.getData("/");
-    for (let user of data.users) {
-        if (user.username == req.headers.username && user.password == req.headers.password) {
-            return true;
+    if(data.users){
+        for (let user of data.users) {
+            if (user.username == req.headers.username && user.password == req.headers.password) {
+                return true;
+            }
         }
-    }
-    return false;
+        return false;
+    } else console.log('database empty');
 }
 
 exports.rpioWrite = function (req, res) {
