@@ -13,6 +13,16 @@ var admin = {
 }
 db.push('/users[0]',admin);
 
+var pinInit = function(){
+    var data = db.getData("/");
+    console.log(data.relays);
+    if(data.relays && data.relays.length > 0){
+        for(let relay of data.relays){
+            rpioOpen(relay.pin, relay.state);
+        }
+    }
+}
+
 pinInit();
 
 router.get('/test', function (req, res, next) {
@@ -73,16 +83,6 @@ var auth = function (username, password) {
         }
     }
     return false;
-}
-
-var pinInit = function(){
-    var data = db.getData("/");
-    console.log(data.relays);
-    if(data.relays && data.relays.length > 0){
-        for(let relay of data.relays){
-            rpioOpen(relay.pin, relay.state);
-        }
-    }
 }
 
 var rpioOpen = function(pin, state){
