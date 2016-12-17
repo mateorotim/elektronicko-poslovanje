@@ -4,7 +4,7 @@ var JsonDB = require('node-json-db');
 var rpio = require('rpio');
 var db = new JsonDB(__dirname + '/db', true, true);
 
-exports.findRelay = function (name) {
+var findRelay = function (name) {
     var data = db.getData("/");
     var i = 0;
     for (let relay of data.relays) {
