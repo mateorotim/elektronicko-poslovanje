@@ -75,7 +75,7 @@ exports.addRelay = function (req, res) {
     var relay = {
         "name": req.body.name,
         "pin": req.body.pin,
-        "state": 1
+        "state": req.body.state
     }
     if (findRelay(relay.name) !== null) {
         res.send({
@@ -107,4 +107,22 @@ exports.pinInit = function () {
             rpioOpen(relay.pin, relay.state);
         }
     }
+}
+
+exports.changeRelay = function (req, res){
+    var relayIndex = findRelay(req.body.name);
+    if(relayIndex !== null){
+        var data = db.getData("/");
+        var relay = data.relays[relayIndex];
+        relay.pin = req.body.pin;
+        rpio.close(relay.pin)
+        rpioOpen(relay.pin, relay.state);
+        db.push('/relays[' + relayIndex + ']', relay);
+        res.send({
+            "changed": true,
+            "name": relay.name,
+            "pin": relay.pin,
+            "state": relay.state
+        });
+    } else res.sendStatus(400);
 }

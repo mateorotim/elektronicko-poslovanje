@@ -25,6 +25,15 @@ router.post('/add', function (req, res) {
     } else res.sendStatus(400);
 });
 
+router.post('/change', function (req, res) {
+    if (!req.body) return res.sendStatus(400);
+    if (rb.auth(req)) {
+        if (req.body.name || req.body.pin) {
+            rb.changeRelay(req, res);
+        } else res.sendStatus(400);
+    } else res.sendStatus(400);
+});
+
 router.get('/login', function (req, res) {
     if (rb.auth(req)) {
         res.send({ "success": true });
