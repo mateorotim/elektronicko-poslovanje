@@ -4,6 +4,18 @@ var JsonDB = require('node-json-db');
 var rpio = require('rpio');
 var db = new JsonDB(__dirname + '/db', true, true);
 
+exports.findRelay = function (name) {
+    var data = db.getData("/");
+    var i = 0;
+    for (let relay of data.relays) {
+        if (relay.name == name) {
+            return i;
+        }
+        i++;
+    }
+    return null;
+}
+
 exports.auth = function (req) {
     var data = db.getData("/");
     if(data.users){
@@ -22,11 +34,9 @@ exports.rpioWrite = function (req, res) {
         console.log("Can't find relay");
         return res.send(400);
     } else {
-        var relay = {
-            "name": req.body.name,
-            "pin": req.body.pin,
-            "state": 1
-        }
+        var data = db.getData("/");
+        var relay = data.relays[relayIndex];
+        relay.state = req.body.state;
         if (relay.state === 1) {
             rpio.write(relay.pin, rpio.LOW);
             console.log("pin %s set to HIGH", relay.pin);
@@ -77,18 +87,6 @@ exports.addRelay = function (req, res) {
         rpioOpen(relay.pin, relay.state);
         res.send({ "added": true });
     }
-}
-
-var findRelay = function (name) {
-    var data = db.getData("/");
-    var i = 0;
-    for (let relay of data.relays) {
-        if (relay.name == name) {
-            return i;
-        }
-        i++;
-    }
-    return null;
 }
 
 var rpioOpen = function (pin, state) {
