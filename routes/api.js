@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var rb = require('../functions/rb')
+var rb = require('../functions/rb.js')
 
 rb.pinInit();
 
