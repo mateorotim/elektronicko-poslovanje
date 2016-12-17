@@ -2,7 +2,33 @@ var exports = module.exports = {};
 
 var JsonDB = require('node-json-db');
 var rpio = require('rpio');
-var db = new JsonDB('../database/db', true, true);
+var db = new JsonDB(__dirname + '/db', true, true);
+
+//temp
+var r1 = {
+            "name": "dnevni",
+            "pin": 3,
+            "state": 1
+        };
+var r2 = {
+            "name": "soba",
+            "pin": 5,
+            "state": 1
+        };
+var r3 = {
+            "name": "kuhinja",
+            "pin": 7,
+            "state": 1
+        };
+var user = {
+            "username": "admin",
+            "password": "21232f297a57a5a743894a0e4a801fc3"
+        };
+
+db.push('/relays[]',r1);
+db.push('/relays[]',r2);
+db.push('/relays[]',r3);
+db.push('/users[]',user);
 
 exports.auth = function (req) {
     var data = db.getData("/");
