@@ -1,0 +1,25 @@
+{
+    "relays": [
+        {
+            "name": "dnevni",
+            "pin": 3,
+            "state": 1
+        },
+        {
+            "name": "soba",
+            "pin": 5,
+            "state": 1
+        },
+        {
+            "name": "kuhinja",
+            "pin": 7,
+            "state": 1
+        }
+    ],
+    "users": [
+        {
+            "username": "admin",
+            "password": "21232f297a57a5a743894a0e4a801fc3"
+        }
+    ]
+}
