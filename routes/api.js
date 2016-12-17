@@ -42,7 +42,7 @@ router.get('/test', function (req, res, next) {
 router.post('/control', function (req, res) {
     if (!req.body) return res.sendStatus(400);
     if (auth(req.headers.username, req.headers.password)) {
-        rpioWrite(req, req.body.pin, req.body.state);
+        rpioWrite(req, res, req.body.pin, req.body.state);
     } else res.sendStatus(400);
 });
 
