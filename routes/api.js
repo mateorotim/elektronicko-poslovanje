@@ -30,10 +30,11 @@ router.post('/add', function (req, res) {
     if (authenticate(req.headers.username, req.headers.password) == true) {
         if(req.body.name && req.body.pin) {
             var relay = {
+                "name":req.body.name,
                 "pin":req.body.pin,
                 "state":1
             }
-            db.push('/relays/' + req.body.name,relay);
+            db.push('/relays[]',relay);
             res.sendStatus(200);
         } else res.sendStatus(400);
         
