@@ -5,7 +5,7 @@ var JsonDB = require('node-json-db');
 var rpio = require('rpio');
 
 var db = new JsonDB(__dirname + '/db', true, true);
-
+console.log(db);
 rpio.open(3, rpio.OUTPUT, rpio.HIGH);
 
 var user = { "username": "admin", "password": "admin" };
