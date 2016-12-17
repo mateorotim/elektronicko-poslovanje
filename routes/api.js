@@ -23,6 +23,16 @@ var pinInit = function(){
     }
 }
 
+var rpioOpen = function(pin, state){
+    if(state === 1){
+        rpio.open(pin, rpio.OUTPUT, rpio.LOW);
+        console.log("pin %s set to OUTPUT and HIGH", pin)
+    } else if(state === 0){
+        rpio.open(pin, rpio.OUTPUT, rpio.HIGH);
+        console.log("pin %s set to OUTPUT and LOW", pin)
+    } else console.log("Bad pin state!");
+}
+
 pinInit();
 
 router.get('/test', function (req, res, next) {
@@ -83,16 +93,6 @@ var auth = function (username, password) {
         }
     }
     return false;
-}
-
-var rpioOpen = function(pin, state){
-    if(state === 1){
-        rpio.open(pin, rpio.OUTPUT, rpio.LOW);
-        console.log("pin %s set to OUTPUT and HIGH", pin)
-    } else if(state === 0){
-        rpio.open(pin, rpio.OUTPUT, rpio.HIGH);
-        console.log("pin %s set to OUTPUT and LOW", pin)
-    } else console.log("Bad pin state!");
 }
 
 var rpioWrite = function(pin, state){
