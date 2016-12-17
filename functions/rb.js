@@ -1,3 +1,5 @@
+var exports = module.exports = {};
+
 var JsonDB = require('node-json-db');
 var rpio = require('rpio');
 var db = new JsonDB('../database/db', true, true);
@@ -106,5 +108,3 @@ exports.pinInit = function () {
         }
     }
 }
-
-var exports = module.exports = {};
