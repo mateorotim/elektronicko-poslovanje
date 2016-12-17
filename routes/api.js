@@ -6,7 +6,7 @@ var rpio = require('rpio');
 
 var db = new JsonDB(__dirname + '/db', true, true);
 console.log(db);
-var relays = db.getData("/relays[]");
+var relays = db.getData("/");
 console.log(relays);
 
 rpio.open(3, rpio.OUTPUT, rpio.HIGH);
