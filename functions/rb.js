@@ -77,7 +77,7 @@ exports.addRelay = function (req, res) {
         "pin": req.body.pin,
         "state": 1
     }
-    if (findRelay(relay.name) === null) {
+    if (findRelay(relay.name) !== null) {
         res.send({
             "added": false,
             "reason": "already exists"
