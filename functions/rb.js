@@ -32,7 +32,7 @@ exports.rpioWrite = function (req, res) {
     var relayIndex = findRelay(req.body.name);
     if (relayIndex === null) {
         console.log("Can't find relay");
-        return res.send(400);
+        return res.sendStatus(400);
     } else {
         var data = db.getData("/");
         var relay = data.relays[relayIndex];
@@ -59,7 +59,7 @@ exports.rpioWrite = function (req, res) {
             });
         } else {
             console.log("Bad pin state!");
-            return res.send(400);
+            return res.sendStatus(400);
         }
     }
 }
