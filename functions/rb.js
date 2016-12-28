@@ -37,7 +37,7 @@ exports.rpioWrite = function (req, res) {
         var data = db.getData("/");
         var relay = data.relays[relayIndex];
         relay.state = req.body.state;
-        if (relay.state === 1) {
+        if (relay.state === true) {
             rpio.write(relay.pin, rpio.LOW);
             console.log("pin %s set to HIGH", relay.pin);
             db.push('/relays[' + relayIndex + ']', relay);
@@ -47,7 +47,7 @@ exports.rpioWrite = function (req, res) {
                 "pin": relay.pin,
                 "state": "HIGH"
             });
-        } else if (relay.state === 0) {
+        } else if (relay.state === false) {
             rpio.write(relay.pin, rpio.HIGH);
             console.log("pin %s set to LOW", relay.pin);
             db.push('/relays[' + relayIndex + ']', relay);
@@ -90,10 +90,10 @@ exports.addRelay = function (req, res) {
 }
 
 var rpioOpen = function (pin, state) {
-    if (state === 1) {
+    if (state === true) {
         rpio.open(pin, rpio.OUTPUT, rpio.LOW);
         console.log("pin %s set to OUTPUT and HIGH", pin);
-    } else if (state === 0) {
+    } else if (state === false) {
         rpio.open(pin, rpio.OUTPUT, rpio.HIGH);
         console.log("pin %s set to OUTPUT and LOW", pin);
     } else console.log("Bad pin state!");
