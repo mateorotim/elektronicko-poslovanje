@@ -18,7 +18,7 @@ router.post('/control', function (req, res) {
 router.post('/add', function (req, res) {
     if (!req.body) return res.sendStatus(400);
     if (rb.auth(req)) {
-        if (req.body.name || req.body.pin || req.body.state) {
+        if (req.body.name && req.body.pin && req.body.state) {
             rb.addRelay(req, res);
         } else res.sendStatus(400);
 
@@ -28,9 +28,9 @@ router.post('/add', function (req, res) {
 router.post('/change', function (req, res) {
     if (!req.body) return res.sendStatus(400);
     if (rb.auth(req)) {
-        if (req.body.name || req.body.pin) {
+        if (req.body.name && req.body.pin) {
             console.log(req.body);
-            //rb.changeRelay(req, res);
+            rb.changeRelay(req, res);
         } else res.sendStatus(400);
     } else res.sendStatus(400);
 });
