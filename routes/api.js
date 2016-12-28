@@ -29,7 +29,8 @@ router.post('/change', function (req, res) {
     if (!req.body) return res.sendStatus(400);
     if (rb.auth(req)) {
         if (req.body.name || req.body.pin) {
-            rb.changeRelay(req, res);
+            console.log(req.body);
+            //rb.changeRelay(req, res);
         } else res.sendStatus(400);
     } else res.sendStatus(400);
 });
