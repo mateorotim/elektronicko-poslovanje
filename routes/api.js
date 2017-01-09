@@ -18,7 +18,7 @@ router.post('/control', function (req, res) {
 router.post('/add', function (req, res) {
     if (!req.body) return res.sendStatus(400);
     if (rb.auth(req)) {
-        if (req.body.name && req.body.pin && req.body.state) {
+        if (req.body.name.lenght < 2 && req.body.pin < 1) {
             rb.addRelay(req, res);
         } else {
             console.log('add failed, bad relay model');
