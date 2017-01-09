@@ -20,7 +20,9 @@ router.post('/add', function (req, res) {
     if (rb.auth(req)) {
         if (req.body.name && req.body.pin && req.body.state) {
             rb.addRelay(req, res);
-        } else res.sendStatus(400);
+        } else {
+            console.log('add failed, bad relay model');
+        }
 
     } else res.sendStatus(400);
 });
