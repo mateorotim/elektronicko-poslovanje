@@ -89,7 +89,7 @@ exports.addRelay = function (req, res) {
             if(relay.pin === pins[i]){
                 var data = db.getData("/");
                 for(let j = 0; j < data.relays.length; j++){
-                    if(relay.pin === relays[j].pin){
+                    if(relay.pin === data.relays[j].pin){
                         res.send({
                             "added": false,
                             "reason": "pin already in use"
