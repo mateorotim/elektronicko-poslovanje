@@ -4,6 +4,8 @@ var JsonDB = require('node-json-db');
 var rpio = require('rpio');
 var db = new JsonDB(__dirname + '/db', true, true);
 
+var pins = [3,5,7,8,10,11,12,13,14,16,18,19,21,22,23,24,26,29,31,32,33,35,36,37,38,40]
+
 var findRelay = function (name) {
     var data = db.getData("/");
     var i = 0;
@@ -83,10 +85,33 @@ exports.addRelay = function (req, res) {
             "reason": "already exists"
         });
     } else {
-        db.push('/relays[]', relay);
-        rpioOpen(relay.pin, relay.state);
-        res.send({ "added": true });
+        for(let i = 0; i < pins.length; i++){
+            if(relay.pin === pins[i]){
+                var data = db.getData("/");
+                for(let j = 0; j < data.relays.length; j++){
+                    if(relay.pin === relays[j].pin){
+                        res.send({
+                            "added": false,
+                            "reason": "pin already in use"
+                        });
+                        break;
+                    }
+                }
+                db.push('/relays[]', relay);
+                rpioOpen(relay.pin, relay.state);
+                res.send({ "added": true });
+                break;
+            }
+        }
+        res.send({
+            "added": false,
+            "reason": "invalid pin"
+        });
     }
+}
+
+var checkPin = function (pin) {
+
 }
 
 var rpioOpen = function (pin, state) {
