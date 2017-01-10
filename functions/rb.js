@@ -80,7 +80,7 @@ exports.addRelay = function (req, res) {
         "state": req.body.state
     }
     if (findRelay(relay.name) !== null) {
-        res.send({
+        return res.send({
             "added": false,
             "reason": "already exists"
         });
@@ -90,20 +90,18 @@ exports.addRelay = function (req, res) {
                 var data = db.getData("/");
                 for(let j = 0; j < data.relays.length; j++){
                     if(relay.pin === data.relays[j].pin){
-                        res.send({
+                        return res.send({
                             "added": false,
                             "reason": "pin already in use"
                         });
-                        break;
                     }
                 }
                 db.push('/relays[]', relay);
                 rpioOpen(relay.pin, relay.state);
-                res.send({ "added": true });
-                break;
+                return res.send({ "added": true });
             }
         }
-        res.send({
+        return res.send({
             "added": false,
             "reason": "invalid pin"
         });
