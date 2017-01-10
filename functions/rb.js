@@ -4,7 +4,7 @@ var JsonDB = require('node-json-db');
 var rpio = require('rpio');
 var db = new JsonDB(__dirname + '/db', true, true);
 
-var pins = [3,5,7,8,10,11,12,13,14,16,18,19,21,22,23,24,26,29,31,32,33,35,36,37,38,40]
+var pins = [3,5,7,8,10,11,12,13,16,18,19,21,22,23,24,26,29,31,32,33,35,36,37,38,40]
 
 var findRelay = function (name) {
     var data = db.getData("/");
