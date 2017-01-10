@@ -38,6 +38,12 @@ router.get('/read', function (req, res) {
     } else res.sendStatus(400);
 });
 
+router.get('/listUsers', function (req, res) {
+    if (rb.auth(req)) {
+        rb.listUsers(res);
+    } else res.sendStatus(400);
+});
+
 router.post('/addUser', function (req, res) {
     if (rb.auth(req)) {
         rb.addUser(req, res);

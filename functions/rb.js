@@ -69,7 +69,7 @@ exports.rpioWrite = function (req, res) {
 exports.readRelays = function (res) {
     var data = db.getData("/");
     if (data.relays && data.relays.length > 0) {
-        res.send(data.relays);
+        return res.send(data.relays);
     }
 }
 
@@ -138,6 +138,13 @@ exports.removeRelay = function (req, res){
             "success": true
         });
     } else return res.sendStatus(400);
+}
+
+exports.listUsers = function (res) {
+    var data = db.getData("/");
+    if (data.users && data.users.length > 0) {
+        return res.send(data.users);
+    }
 }
 
 exports.addUser = function (req, res) {
