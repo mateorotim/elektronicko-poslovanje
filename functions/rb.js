@@ -171,11 +171,26 @@ exports.removeUser = function (req, res) {
         let userIndex = findUser(req.body.username);
         if(userIndex != null){
             db.delete('/users[' + userIndex + ']');
-            console.log('user', req.body.username, 'added');
+            console.log('user', req.body.username, 'removed');
             return res.send({
                 "removed": true
             });
         } else return res.sendStatus(400);
+    } else return res.sendStatus(400);
+}
+
+exports.updateUser = function (req, res) {
+    let user = {
+            username: req.body.username,
+            password: req.body.password
+        }
+    let userIndex = findUser(user.username);
+    if(userIndex != null){
+        db.push('/users[' + userIndex + ']', user);
+        console.log('user', user.username, 'updated');
+        return res.send({
+            "updated": true
+        });
     } else return res.sendStatus(400);
 }
 

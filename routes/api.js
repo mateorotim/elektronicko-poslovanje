@@ -56,4 +56,10 @@ router.post('/removeUser', function (req, res) {
     } else res.sendStatus(400);
 });
 
+router.post('/updateUser', function (req, res) {
+    if (rb.auth(req)) {
+        rb.updateUser(req, res);
+    } else res.sendStatus(400);
+});
+
 module.exports = router;
