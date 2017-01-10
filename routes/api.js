@@ -9,14 +9,12 @@ router.get('/test', function (req, res, next) {
 });
 
 router.post('/control', function (req, res) {
-    if (!req.body) return res.sendStatus(400);
     if (rb.auth(req)) {
         rb.rpioWrite(req, res);
     } else res.sendStatus(400);
 });
 
 router.post('/add', function (req, res) {
-    if (!req.body) return res.sendStatus(400);
     if (rb.auth(req)) {
         rb.addRelay(req, res);
     } else res.sendStatus(400);
@@ -37,6 +35,18 @@ router.get('/login', function (req, res) {
 router.get('/read', function (req, res) {
     if (rb.auth(req)) {
         rb.readRelays(res);
+    } else res.sendStatus(400);
+});
+
+router.post('/addUser', function (req, res) {
+    if (rb.auth(req)) {
+        rb.addUser(req, res);
+    } else res.sendStatus(400);
+});
+
+router.post('/removeUser', function (req, res) {
+    if (rb.auth(req)) {
+        rb.removeUser(req, res);
     } else res.sendStatus(400);
 });
 

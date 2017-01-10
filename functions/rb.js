@@ -108,10 +108,6 @@ exports.addRelay = function (req, res) {
     }
 }
 
-var checkPin = function (pin) {
-
-}
-
 var rpioOpen = function (pin, state) {
     if (state === true) {
         rpio.open(pin, rpio.OUTPUT, rpio.LOW);
@@ -135,10 +131,55 @@ exports.pinInit = function () {
 exports.removeRelay = function (req, res){
     var relayIndex = findRelay(req.body.name);
     if(relayIndex !== null){
+        rpio.close(req.body.pin)
         db.delete('/relays[' + relayIndex + ']');
         console.log('relay removed');
         return res.send({
             "success": true
         });
     } else return res.sendStatus(400);
+}
+
+exports.addUser = function (req, res) {
+    let user = {
+        username: req.body.username,
+        password: req.body.password
+    }
+    let userIndex = findUser(user.username);
+    if(userIndex == null){
+        db.push('/users[]', user);
+        return res.send({
+            "added": true
+        });
+    } else if (userIndex != null){
+        return res.send({
+            "added": false,
+            "reason": 'user already exists'
+        });
+    } else res.sendStatus(400);
+}
+
+exports.removeUser = function (req, res) {
+    if(req.body.name != 'admin'){
+        let userIndex = findUser(req.body.username);
+        if(userIndex != null){
+            db.delete('/users[' + userIndex + ']');
+            console.log('user', req.body.username, 'added');
+            return res.send({
+                "removed": true
+            });
+        } else return res.sendStatus(400);
+    } else return res.sendStatus(400);
+}
+
+var findUser = function (name) {
+    var data = db.getData("/");
+    var i = 0;
+    for (let user of data.users) {
+        if (user.username == name) {
+            return i;
+        }
+        i++;
+    }
+    return null;
 }
