@@ -132,20 +132,13 @@ exports.pinInit = function () {
     }
 }
 
-exports.changeRelay = function (req, res){
+exports.removeRelay = function (req, res){
     var relayIndex = findRelay(req.body.name);
     if(relayIndex !== null){
-        var data = db.getData("/");
-        var relay = data.relays[relayIndex];
-        relay.pin = req.body.pin;
-        rpio.close(relay.pin)
-        rpioOpen(relay.pin, relay.state);
-        db.push('/relays[' + relayIndex + ']', relay);
-        res.send({
-            "changed": true,
-            "name": relay.name,
-            "pin": relay.pin,
-            "state": relay.state
+        db.delete('/relays[' + relayIndex + ']');
+        console.log('relay removed');
+        return res.send({
+            "success": true
         });
-    } else res.sendStatus(400);
+    } else return res.sendStatus(400);
 }

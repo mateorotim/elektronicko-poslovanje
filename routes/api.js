@@ -22,13 +22,9 @@ router.post('/add', function (req, res) {
     } else res.sendStatus(400);
 });
 
-router.post('/change', function (req, res) {
-    if (!req.body) return res.sendStatus(400);
+router.post('/remove', function (req, res) {
     if (rb.auth(req)) {
-        if (req.body.name && req.body.pin) {
-            console.log(req.body);
-            rb.changeRelay(req, res);
-        } else res.sendStatus(400);
+        rb.removeRelay(req, res);
     } else res.sendStatus(400);
 });
 
