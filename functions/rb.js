@@ -4,7 +4,7 @@ var JsonDB = require('node-json-db');
 var rpio = require('rpio');
 var db = new JsonDB(__dirname + '/db', true, true);
 
-var pins = [3,5,7,8,10,11,12,13,16,18,19,21,22,23,24,26,29,31,32,33,35,36,37,38,40]
+var pins = [3, 5, 7, 8, 10, 11, 12, 13, 16, 18, 19, 21, 22, 23, 24, 26, 29, 31, 32, 33, 35, 36, 37, 38, 40]
 
 var findRelay = function (name) {
     var data = db.getData("/");
@@ -20,7 +20,7 @@ var findRelay = function (name) {
 
 exports.auth = function (req) {
     var data = db.getData("/");
-    if(data.users){
+    if (data.users) {
         for (let user of data.users) {
             if (user.username == req.headers.username && user.password == req.headers.password) {
                 return true;
@@ -85,11 +85,11 @@ exports.addRelay = function (req, res) {
             "reason": "already exists"
         });
     } else {
-        for(let i = 0; i < pins.length; i++){
-            if(relay.pin === pins[i]){
+        for (let i = 0; i < pins.length; i++) {
+            if (relay.pin === pins[i]) {
                 var data = db.getData("/");
-                for(let j = 0; j < data.relays.length; j++){
-                    if(relay.pin === data.relays[j].pin){
+                for (let j = 0; j < data.relays.length; j++) {
+                    if (relay.pin === data.relays[j].pin) {
                         return res.send({
                             "added": false,
                             "reason": "pin already in use"
@@ -128,9 +128,9 @@ exports.pinInit = function () {
     }
 }
 
-exports.removeRelay = function (req, res){
+exports.removeRelay = function (req, res) {
     var relayIndex = findRelay(req.body.name);
-    if(relayIndex !== null){
+    if (relayIndex !== null) {
         rpio.close(req.body.pin)
         db.delete('/relays[' + relayIndex + ']');
         console.log('relay removed');
@@ -157,12 +157,12 @@ exports.addUser = function (req, res) {
         password: req.body.password
     }
     let userIndex = findUser(user.username);
-    if(userIndex == null){
+    if (userIndex == null) {
         db.push('/users[]', user);
         return res.send({
             "added": true
         });
-    } else if (userIndex != null){
+    } else if (userIndex != null) {
         return res.send({
             "added": false,
             "reason": 'user already exists'
@@ -171,9 +171,9 @@ exports.addUser = function (req, res) {
 }
 
 exports.removeUser = function (req, res) {
-    if(req.body.name != 'admin'){
+    if (req.body.name != 'admin') {
         let userIndex = findUser(req.body.username);
-        if(userIndex != null){
+        if (userIndex != null) {
             db.delete('/users[' + userIndex + ']');
             console.log('user', req.body.username, 'removed');
             return res.send({
@@ -185,11 +185,11 @@ exports.removeUser = function (req, res) {
 
 exports.updateUser = function (req, res) {
     let user = {
-            username: req.body.username,
-            password: req.body.password
-        }
+        username: req.body.username,
+        password: req.body.password
+    }
     let userIndex = findUser(user.username);
-    if(userIndex != null){
+    if (userIndex != null) {
         db.push('/users[' + userIndex + ']', user);
         console.log('user', user.username, 'updated');
         return res.send({
@@ -223,12 +223,12 @@ exports.addCamera = function (req, res) {
         ip: req.body.ip
     }
     let cameraIndex = findCamera(camera.name);
-    if(cameraIndex == null){
+    if (cameraIndex == null) {
         db.push('/cameras[]', camera);
         return res.send({
             "added": true
         });
-    } else if (cameraIndex != null){
+    } else if (cameraIndex != null) {
         return res.send({
             "added": false,
             "reason": 'camera already exists'
@@ -238,7 +238,7 @@ exports.addCamera = function (req, res) {
 
 exports.removeCamera = function (req, res) {
     let cameraIndex = findCamera(camera.name);
-    if(cameraIndex != null){
+    if (cameraIndex != null) {
         db.delete('/cameras[' + cameraIndex + ']');
         console.log('camera', req.body.name, 'removed');
         return res.send({
@@ -250,11 +250,13 @@ exports.removeCamera = function (req, res) {
 var findCamera = function (name) {
     var data = db.getData("/");
     var i = 0;
-    for (let camera of data.cameras) {
-        if (camera.name == name) {
-            return i;
+    if (data.cameras) {
+        for (let camera of data.cameras) {
+            if (camera.name == name) {
+                return i;
+            }
+            i++;
         }
-        i++;
     }
     return null;
 }
