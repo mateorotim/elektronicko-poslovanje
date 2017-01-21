@@ -241,7 +241,7 @@ exports.addCamera = function (req, res) {
 }
 
 exports.removeCamera = function (req, res) {
-    let cameraIndex = findCamera(camera.name);
+    let cameraIndex = findCamera(req.body.name);
     if (cameraIndex != null) {
         db.delete('/cameras[' + cameraIndex + ']');
         console.log('camera', req.body.name, 'removed');
