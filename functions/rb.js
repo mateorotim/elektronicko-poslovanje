@@ -206,6 +206,13 @@ var findUser = function (name) {
     return null;
 }
 
+exports.listCameras = function (res) {
+    var data = db.getData("/");
+    if (data.cameras && data.cameras.length > 0) {
+        return res.send(data.cameras);
+    }
+}
+
 exports.addCamera = function (req, res) {
     let camera = {
         name: req.body.name,

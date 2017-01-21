@@ -62,6 +62,12 @@ router.post('/updateUser', function (req, res) {
     } else res.sendStatus(400);
 });
 
+router.get('/listCameras', function (req, res) {
+    if (rb.auth(req)) {
+        rb.listCameras(res);
+    } else res.sendStatus(400);
+});
+
 router.post('/addCamera', function (req, res) {
     if (rb.auth(req)) {
         rb.addCamera(req, res);
