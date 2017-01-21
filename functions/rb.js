@@ -147,7 +147,10 @@ exports.listUsers = function (res) {
     if (data.users && data.users.length > 0) {
         let users = [];
         for (let user of data.users) {
-            users.push(user.username);
+            users.push({
+                username: user.username,
+                password: ''
+            });
         }
         return res.send(users);
     }
