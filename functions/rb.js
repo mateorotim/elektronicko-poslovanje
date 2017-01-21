@@ -227,7 +227,9 @@ exports.listCameras = function (res) {
 exports.addCamera = function (req, res) {
     let camera = {
         name: req.body.name,
-        ip: req.body.ip
+        ip: req.body.ip,
+        username: req.body.username,
+        password: req.body.password
     }
     let cameraIndex = findCamera(camera.name);
     if (cameraIndex == null) {
