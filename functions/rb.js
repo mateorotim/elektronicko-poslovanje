@@ -9,11 +9,13 @@ var pins = [3, 5, 7, 8, 10, 11, 12, 13, 16, 18, 19, 21, 22, 23, 24, 26, 29, 31, 
 var findRelay = function (name) {
     var data = db.getData("/");
     var i = 0;
-    for (let relay of data.relays) {
-        if (relay.name == name) {
-            return i;
+    if (data.relays) {
+        for (let relay of data.relays) {
+            if (relay.name == name) {
+                return i;
+            }
+            i++;
         }
-        i++;
     }
     return null;
 }
@@ -145,7 +147,7 @@ exports.listUsers = function (res) {
     if (data.users && data.users.length > 0) {
         let users = [];
         for (let user of data.users) {
-            users.push(user);
+            users.push(user.username);
         }
         return res.send(users);
     }
@@ -201,11 +203,13 @@ exports.updateUser = function (req, res) {
 var findUser = function (name) {
     var data = db.getData("/");
     var i = 0;
-    for (let user of data.users) {
-        if (user.username == name) {
-            return i;
+    if (data.users) {
+        for (let user of data.users) {
+            if (user.username == name) {
+                return i;
+            }
+            i++;
         }
-        i++;
     }
     return null;
 }
