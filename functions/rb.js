@@ -73,7 +73,7 @@ exports.readRelays = function (res) {
     if (data.relays && data.relays.length > 0) {
         return res.send(data.relays);
     }
-    return res.send();
+    return res.send([]);
 }
 
 exports.addRelay = function (req, res) {
@@ -155,7 +155,7 @@ exports.listUsers = function (res) {
         }
         return res.send(users);
     }
-    return res.send();
+    return res.send([]);
 }
 
 exports.addUser = function (req, res) {
@@ -224,7 +224,7 @@ exports.listCameras = function (res) {
     if (data.cameras && data.cameras.length > 0) {
         return res.send(data.cameras);
     }
-    return res.send();
+    return res.send([]);
 }
 
 exports.addCamera = function (req, res) {
