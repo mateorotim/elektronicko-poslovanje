@@ -205,3 +205,47 @@ var findUser = function (name) {
     }
     return null;
 }
+
+exports.addCamera = function (req, res) {
+    let camera = {
+        name: req.body.name,
+        username: req.body.username,
+        password: req.body.password,
+        ip: req.body.ip
+    }
+    let cameraIndex = findCamera(camera.name);
+    if(cameraIndex == null){
+        db.push('/cameras[]', camera);
+        return res.send({
+            "added": true
+        });
+    } else if (cameraIndex != null){
+        return res.send({
+            "added": false,
+            "reason": 'camera already exists'
+        });
+    } else res.sendStatus(400);
+}
+
+exports.removeCamera = function (req, res) {
+    let cameraIndex = findCamera(camera.name);
+    if(cameraIndex != null){
+        db.delete('/cameras[' + cameraIndex + ']');
+        console.log('camera', req.body.name, 'removed');
+        return res.send({
+            "removed": true
+        });
+    } else return res.sendStatus(400);
+}
+
+var findCamera = function (name) {
+    var data = db.getData("/");
+    var i = 0;
+    for (let camera of data.cameras) {
+        if (camera.name == name) {
+            return i;
+        }
+        i++;
+    }
+    return null;
+}

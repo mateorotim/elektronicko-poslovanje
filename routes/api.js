@@ -62,4 +62,16 @@ router.post('/updateUser', function (req, res) {
     } else res.sendStatus(400);
 });
 
+router.post('/addCamera', function (req, res) {
+    if (rb.auth(req)) {
+        rb.addCamera(req, res);
+    } else res.sendStatus(400);
+});
+
+router.post('/removeCamera', function (req, res) {
+    if (rb.auth(req)) {
+        rb.removeCamera(req, res);
+    } else res.sendStatus(400);
+});
+
 module.exports = router;
