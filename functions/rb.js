@@ -143,7 +143,11 @@ exports.removeRelay = function (req, res){
 exports.listUsers = function (res) {
     var data = db.getData("/");
     if (data.users && data.users.length > 0) {
-        return res.send(data.users);
+        let users = [];
+        for (let user of data.users) {
+            users.push(user);
+        }
+        return res.send(users);
     }
 }
 
@@ -216,8 +220,6 @@ exports.listCameras = function (res) {
 exports.addCamera = function (req, res) {
     let camera = {
         name: req.body.name,
-        username: req.body.username,
-        password: req.body.password,
         ip: req.body.ip
     }
     let cameraIndex = findCamera(camera.name);
